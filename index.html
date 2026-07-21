@@ -25,36 +25,51 @@
         }
     </script>
 
-    <style type="text/tailwindcss">
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; padding-bottom: 70px; color-scheme: dark; }
-        
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #1e293b; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+  <style type="text/tailwindcss">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; padding-bottom: 70px; color-scheme: dark; }
+    
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
 
-        @media print { 
-            .no-print { display: none !important; } 
-            body { background: #ffffff; color: #000; padding-bottom: 0; color-scheme: light; }
-            .print-area { box-shadow: none !important; border: none !important; margin-bottom: 0 !important; }
+    /* Pengaturan Cetak / Print ke Kertas F4 */
+    @media print { 
+        @page {
+            size: 215mm 330mm; /* Ukuran Kertas F4 */
+            margin: 0; /* Margin diatur di dalam template Word / dokumen */
         }
+        .no-print { display: none !important; } 
+        body { background: #ffffff; color: #000; padding-bottom: 0; color-scheme: light; }
+        .print-area { box-shadow: none !important; border: none !important; margin-bottom: 0 !important; width: 215mm !important; min-height: 330mm !important; }
+    }
 
-        .sptjm-document { font-family: 'Arial', sans-serif; color: #000; background-color: #ffffff; line-height: 1.5; font-size: 11pt; color-scheme: light; }
-        
-        .input-modern { 
-            @apply w-full bg-[#1e293b] border border-slate-600 rounded-lg px-4 py-3 text-sm focus:bg-[#0f172a] focus:border-kejaksaan-500 focus:ring-2 focus:ring-kejaksaan-500/50 transition-all outline-none text-white placeholder-slate-400 shadow-inner; 
-        }
-        
-        .label-modern { 
-            @apply block text-[12px] font-bold text-slate-300 mb-2 uppercase tracking-wider; 
-        }
-        
-        .card-modern { 
-            @apply bg-[#1e293b] p-6 rounded-2xl border border-slate-700 shadow-xl mb-6 relative overflow-hidden; 
-        }
-    </style>
+    /* Dokumen Preview F4 */
+    .sptjm-document { 
+        font-family: 'Arial', sans-serif; 
+        color: #000; 
+        background-color: #ffffff; 
+        line-height: 1.5; 
+        font-size: 11pt; 
+        color-scheme: light;
+        width: 215mm;
+        min-height: 330mm;
+    }
+    
+    .input-modern { 
+        @apply w-full bg-[#1e293b] border border-slate-600 rounded-lg px-4 py-3 text-sm focus:bg-[#0f172a] focus:border-kejaksaan-500 focus:ring-2 focus:ring-kejaksaan-500/50 transition-all outline-none text-white placeholder-slate-400 shadow-inner; 
+    }
+    
+    .label-modern { 
+        @apply block text-[12px] font-bold text-slate-300 mb-2 uppercase tracking-wider; 
+    }
+    
+    .card-modern { 
+        @apply bg-[#1e293b] p-6 rounded-2xl border border-slate-700 shadow-xl mb-6 relative overflow-hidden; 
+    }
+</style>
 </head>
 <body class="antialiased selection:bg-kejaksaan-500 selection:text-white">
 
@@ -186,9 +201,12 @@
                     </div>
                 </div>
                 
-                <div class="overflow-y-auto max-h-[75vh] flex flex-col items-center gap-8 pb-4 custom-scrollbar rounded-xl">
-                    <div id="previewPage" class="p-[20mm] w-full max-w-[210mm] min-h-[297mm] shadow-2xl sptjm-document print-area rounded-sm">
-                        
+              <div class="overflow-y-auto max-h-[75vh] flex flex-col items-center gap-8 pb-4 custom-scrollbar rounded-xl">
+    <!-- Diubah dari max-w-[210mm] min-h-[297mm] menjadi F4 -->
+    <div id="previewPage" class="p-[20mm] w-full max-w-[215mm] min-h-[330mm] shadow-2xl sptjm-document print-area rounded-sm">
+        <!-- Isi Dokumen Preview -->
+    </div>
+</div>
                         <div class="text-center font-bold text-xs uppercase leading-tight mb-1">KEJAKSAAN REPUBLIK INDONESIA[cite: 2]</div>
                         <div class="text-center font-bold text-xs uppercase leading-tight mb-1" id="prev_unit_wilayah">KEJAKSAAN TINGGI MALUKU[cite: 2]</div>
                         <div class="text-center font-bold text-sm uppercase leading-tight mb-4" id="prev_satuan_kerja">KEJAKSAAN NEGERI MALUKU TENGGARA[cite: 2]</div>

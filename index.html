@@ -10,9 +10,9 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
-    <!-- Library PizZip & Docxtemplater Lokal (Pastikan file ada di repositori) -->
-    <script src="pizzip.min.js"></script>
-    <script src="docxtemplater.js"></script>
+    <!-- Alternatif CDN via unpkg (Sangat Stabil) -->
+    <script src="https://unpkg.com/pizzip@3.1.4/dist/pizzip.min.js"></script>
+    <script src="https://unpkg.com/docxtemplater@3.37.2/build/docxtemplater.js"></script>
 
     <script>
         tailwind.config = {
@@ -320,11 +320,12 @@
         document.getElementById('prev_nip_ttd').innerText = getVal('in_nip') || '-';
     }
 
-    function eksekusiDocxTemplater(arrayBufferContent, btnEl, originalBtnText) {
+function eksekusiDocxTemplater(arrayBufferContent, btnEl, originalBtnText) {
         try {
+            // Memastikan PizZip terbaca dari berbagai variasi pemuatan global
             const PizZipConstructor = window.PizZip || window.pizzip;
             if (!PizZipConstructor) {
-                throw new Error("Library PizZip tidak terdeteksi di browser.");
+                throw new Error("Library PizZip gagal dimuat oleh browser.");
             }
 
             const zip = new PizZipConstructor(arrayBufferContent);

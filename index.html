@@ -9,9 +9,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- PizZip & Docxtemplater CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax5/libs/pizzip/3.1.4/pizzip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.37.2/docxtemplater.js"></script>
+<!-- PizZip & Docxtemplater CDN yang Diperbaiki -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.4/pizzip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.37.2/docxtemplater.js"></script>
 
     <script>
         tailwind.config = {
@@ -351,51 +351,55 @@
         document.getElementById('prev_nip_ttd').innerText = getVal('in_nip') || '-';
     }
 
-    function eksekusiDocxTemplater(arrayBufferContent, btnEl, originalBtnText) {
-        try {
-            const zip = new PizZip(arrayBufferContent);
-            const doc = new window.docxtemplater(zip, { 
-                paragraphLoop: true, linebreaks: true, nullGetter: function() { return ""; }
-            });
-            
-            const dataContext = {
-                nomor: getVal('in_nomor'),
-                nama_pejabat: getVal('in_nama_pejabat').toUpperCase(),
-                nama: getVal('in_nama_pejabat').toUpperCase(),
-                nip: getVal('in_nip'),
-                jabatan: getVal('in_jabatan'),
-                satuan_kerja: getVal('in_satuan_kerja').toUpperCase(),
-                unit_wilayah: getVal('in_unit_wilayah').toUpperCase(),
-                kementerian: getVal('in_kementerian').toUpperCase(),
-                kementerian_lembaga: getVal('in_kementerian').toUpperCase(),
-                uraian_sptjm: getVal('in_uraian_sptjm'),
-                lokasi: getVal('in_lokasi'),
-                tanggal_surat: formatTanggalIndo(getVal('in_tanggal_surat')),
-                pejabat_penandatangan_sptjm: getVal('in_jabatan')
-            };
-
-            doc.render(dataContext);
-
-            const blob = doc.getZip().generate({ 
-                type: "blob", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
-            });
-            
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; 
-            a.download = `SPTJM_${getVal('in_nomor').replace(/[^a-zA-Z0-9]/g, '_')}.docx`;
-            document.body.appendChild(a); a.click();
-            
-            setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
-
-        } catch (error) {
-            console.error("DocxTemplater Error:", error);
-            alert(`Gagal menyusun File Word!\n\nPesan Error: ${error.message}`);
-        } finally {
-            btnEl.innerHTML = originalBtnText; btnEl.disabled = false;
+function eksekusiDocxTemplater(arrayBufferContent, btnEl, originalBtnText) {
+    try {
+        const PizZipConstructor = window.PizZip || window.pizzip;
+        if (!PizZipConstructor) {
+            throw new Error("Library PizZip tidak terdeteksi di browser.");
         }
-    }
 
+        const zip = new PizZipConstructor(arrayBufferContent);
+        const doc = new window.docxtemplater(zip, { 
+            paragraphLoop: true, linebreaks: true, nullGetter: function() { return ""; }
+        });
+        
+        const dataContext = {
+            nomor: getVal('in_nomor'),
+            nama_pejabat: getVal('in_nama_pejabat').toUpperCase(),
+            nama: getVal('in_nama_pejabat').toUpperCase(),
+            nip: getVal('in_nip'),
+            jabatan: getVal('in_jabatan'),
+            satuan_kerja: getVal('in_satuan_kerja').toUpperCase(),
+            unit_wilayah: getVal('in_unit_wilayah').toUpperCase(),
+            kementerian: getVal('in_kementerian').toUpperCase(),
+            kementerian_lembaga: getVal('in_kementerian').toUpperCase(),
+            uraian_sptjm: getVal('in_uraian_sptjm'),
+            lokasi: getVal('in_lokasi'),
+            tanggal_surat: formatTanggalIndo(getVal('in_tanggal_surat')),
+            pejabat_penandatangan_sptjm: getVal('in_jabatan')
+        };
+
+        doc.render(dataContext);
+
+        const blob = doc.getZip().generate({ 
+            type: "blob", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+        });
+        
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; 
+        a.download = `SPTJM_${getVal('in_nomor').replace(/[^a-zA-Z0-9]/g, '_')}.docx`;
+        document.body.appendChild(a); a.click();
+        
+        setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
+
+    } catch (error) {
+        console.error("DocxTemplater Error:", error);
+        alert(`Gagal menyusun File Word!\n\nPesan Error: ${error.message}`);
+    } finally {
+        btnEl.innerHTML = originalBtnText; btnEl.disabled = false;
+    }
+}
     async function downloadWord() {
         const btn = document.getElementById('btnDownload');
         const originalText = btn.innerHTML;

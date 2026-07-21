@@ -9,9 +9,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-<!-- PizZip & Docxtemplater CDN yang Diperbaiki -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.4/pizzip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.37.2/docxtemplater.js"></script>
+    
+    <!-- Library PizZip & Docxtemplater Lokal (Pastikan file ada di repositori) -->
+    <script src="pizzip.min.js"></script>
+    <script src="docxtemplater.js"></script>
 
     <script>
         tailwind.config = {
@@ -25,51 +26,49 @@
         }
     </script>
 
-  <style type="text/tailwindcss">
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
-    body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; padding-bottom: 70px; color-scheme: dark; }
-    
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #1e293b; }
-    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    <style type="text/tailwindcss">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; padding-bottom: 70px; color-scheme: dark; }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
 
-    /* Pengaturan Cetak / Print ke Kertas F4 */
-    @media print { 
-        @page {
-            size: 215mm 330mm; /* Ukuran Kertas F4 */
-            margin: 0; /* Margin diatur di dalam template Word / dokumen */
+        @media print { 
+            @page {
+                size: 215mm 330mm;
+                margin: 0;
+            }
+            .no-print { display: none !important; } 
+            body { background: #ffffff; color: #000; padding-bottom: 0; color-scheme: light; }
+            .print-area { box-shadow: none !important; border: none !important; margin-bottom: 0 !important; width: 215mm !important; min-height: 330mm !important; }
         }
-        .no-print { display: none !important; } 
-        body { background: #ffffff; color: #000; padding-bottom: 0; color-scheme: light; }
-        .print-area { box-shadow: none !important; border: none !important; margin-bottom: 0 !important; width: 215mm !important; min-height: 330mm !important; }
-    }
 
-    /* Dokumen Preview F4 */
-    .sptjm-document { 
-        font-family: 'Arial', sans-serif; 
-        color: #000; 
-        background-color: #ffffff; 
-        line-height: 1.5; 
-        font-size: 11pt; 
-        color-scheme: light;
-        width: 215mm;
-        min-height: 330mm;
-    }
-    
-    .input-modern { 
-        @apply w-full bg-[#1e293b] border border-slate-600 rounded-lg px-4 py-3 text-sm focus:bg-[#0f172a] focus:border-kejaksaan-500 focus:ring-2 focus:ring-kejaksaan-500/50 transition-all outline-none text-white placeholder-slate-400 shadow-inner; 
-    }
-    
-    .label-modern { 
-        @apply block text-[12px] font-bold text-slate-300 mb-2 uppercase tracking-wider; 
-    }
-    
-    .card-modern { 
-        @apply bg-[#1e293b] p-6 rounded-2xl border border-slate-700 shadow-xl mb-6 relative overflow-hidden; 
-    }
-</style>
+        .sptjm-document { 
+            font-family: 'Arial', sans-serif; 
+            color: #000; 
+            background-color: #ffffff; 
+            line-height: 1.5; 
+            font-size: 11pt; 
+            color-scheme: light;
+            width: 215mm;
+            min-height: 330mm;
+        }
+        
+        .input-modern { 
+            @apply w-full bg-[#1e293b] border border-slate-600 rounded-lg px-4 py-3 text-sm focus:bg-[#0f172a] focus:border-kejaksaan-500 focus:ring-2 focus:ring-kejaksaan-500/50 transition-all outline-none text-white placeholder-slate-400 shadow-inner; 
+        }
+        
+        .label-modern { 
+            @apply block text-[12px] font-bold text-slate-300 mb-2 uppercase tracking-wider; 
+        }
+        
+        .card-modern { 
+            @apply bg-[#1e293b] p-6 rounded-2xl border border-slate-700 shadow-xl mb-6 relative overflow-hidden; 
+        }
+    </style>
 </head>
 <body class="antialiased selection:bg-kejaksaan-500 selection:text-white">
 
@@ -112,7 +111,6 @@
             
             <form id="sptjmForm" class="space-y-6">
                 
-                <!-- Identitas Surat -->
                 <div class="card-modern">
                     <div class="absolute top-0 left-0 w-1.5 h-full bg-kejaksaan-500"></div>
                     <h3 class="flex items-center gap-2 text-sm font-bold text-slate-200 mb-5 pb-3 border-b border-slate-700">
@@ -130,7 +128,6 @@
                     </div>
                 </div>
 
-                <!-- Pejabat Penanggung Jawab -->
                 <div class="card-modern">
                     <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
                     <h3 class="flex items-center gap-2 text-sm font-bold text-slate-200 mb-5 pb-3 border-b border-slate-700">
@@ -139,7 +136,7 @@
                     <div class="space-y-5">
                         <div>
                             <label for="in_nama_pejabat" class="label-modern">Nama Pejabat & Gelar</label>
-                            <input type="text" id="in_nama_pejabat" value="" class="input-modern uppercase font-bold">
+                            <input type="text" id="in_nama_pejabat" class="input-modern uppercase font-bold">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
@@ -155,7 +152,6 @@
                     </div>
                 </div>
 
-                <!-- Satuan Kerja & Wilayah -->
                 <div class="card-modern mb-10">
                     <div class="absolute top-0 left-0 w-1.5 h-full bg-amber-500"></div>
                     <h3 class="flex items-center gap-2 text-sm font-bold text-slate-200 mb-5 pb-3 border-b border-slate-700">
@@ -189,24 +185,21 @@
             </form>
         </section>
 
-        <!-- LIVE PREVIEW SECTION -->
+        <!-- LIVE PREVIEW SECTION (F4) -->
         <section class="w-full lg:w-1/2 xl:w-7/12 relative">
             <div class="lg:sticky lg:top-28 bg-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl border border-slate-700">
                 <div class="flex items-center justify-between mb-5 text-slate-400">
                     <h2 class="text-sm font-bold flex items-center gap-2">
-                        <i class="ph-fill ph-eye text-xl text-slate-300"></i> Pratinjau Dokumen SPTJM (A4)
+                        <i class="ph-fill ph-eye text-xl text-slate-300"></i> Pratinjau Dokumen SPTJM (F4)
                     </h2>
                     <div class="text-xs font-semibold bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-full text-slate-400">
                         Format Standar Kejaksaan
                     </div>
                 </div>
                 
-              <div class="overflow-y-auto max-h-[75vh] flex flex-col items-center gap-8 pb-4 custom-scrollbar rounded-xl">
-    <!-- Diubah dari max-w-[210mm] min-h-[297mm] menjadi F4 -->
-    <div id="previewPage" class="p-[20mm] w-full max-w-[215mm] min-h-[330mm] shadow-2xl sptjm-document print-area rounded-sm">
-        <!-- Isi Dokumen Preview -->
-    </div>
-</div>
+                <div class="overflow-y-auto max-h-[75vh] flex flex-col items-center gap-8 pb-4 custom-scrollbar rounded-xl">
+                    <div id="previewPage" class="p-[20mm] w-full max-w-[215mm] min-h-[330mm] shadow-2xl sptjm-document print-area rounded-sm">
+                        
                         <div class="text-center font-bold text-xs uppercase leading-tight mb-1">KEJAKSAAN REPUBLIK INDONESIA[cite: 2]</div>
                         <div class="text-center font-bold text-xs uppercase leading-tight mb-1" id="prev_unit_wilayah">KEJAKSAAN TINGGI MALUKU[cite: 2]</div>
                         <div class="text-center font-bold text-sm uppercase leading-tight mb-4" id="prev_satuan_kerja">KEJAKSAAN NEGERI MALUKU TENGGARA[cite: 2]</div>
@@ -218,36 +211,12 @@
                         <div class="text-xs mb-3">Yang bertanda tangan di bawah ini[cite: 2] :</div>
                         
                         <table class="w-full text-xs mb-4 align-top">
-                            <tr>
-                                <td class="w-36 py-1">Nama</td>
-                                <td class="w-4 py-1">:</td>
-                                <td class="py-1 font-bold uppercase" id="prev_nama_pejabat">-</td>
-                            </tr>
-                            <tr>
-                                <td class="py-1">NIP</td>
-                                <td class="py-1">:</td>
-                                <td class="py-1 font-mono" id="prev_nip">-</td>
-                            </tr>
-                            <tr>
-                                <td class="py-1">Jabatan</td>
-                                <td class="py-1">:</td>
-                                <td class="py-1" id="prev_jabatan">-</td>
-                            </tr>
-                            <tr>
-                                <td class="py-1">Satuan Kerja</td>
-                                <td class="py-1">:</td>
-                                <td class="py-1 uppercase" id="prev_satuan_kerja_baris">-</td>
-                            </tr>
-                            <tr>
-                                <td class="py-1">Unit Wilayah</td>
-                                <td class="py-1">:</td>
-                                <td class="py-1 uppercase" id="prev_unit_wilayah_baris">-</td>
-                            </tr>
-                            <tr>
-                                <td class="py-1">Kementerian/Lembaga</td>
-                                <td class="py-1">:</td>
-                                <td class="py-1 uppercase" id="prev_kementerian">-</td>
-                            </tr>
+                            <tr><td class="w-36 py-1">Nama</td><td class="w-4 py-1">:</td><td class="py-1 font-bold uppercase" id="prev_nama_pejabat">-</td></tr>
+                            <tr><td class="py-1">NIP</td><td class="py-1">:</td><td class="py-1 font-mono" id="prev_nip">-</td></tr>
+                            <tr><td class="py-1">Jabatan</td><td class="py-1">:</td><td class="py-1" id="prev_jabatan">-</td></tr>
+                            <tr><td class="py-1">Satuan Kerja</td><td class="py-1">:</td><td class="py-1 uppercase" id="prev_satuan_kerja_baris">-</td></tr>
+                            <tr><td class="py-1">Unit Wilayah</td><td class="py-1">:</td><td class="py-1 uppercase" id="prev_unit_wilayah_baris">-</td></tr>
+                            <tr><td class="py-1">Kementerian/Lembaga</td><td class="py-1">:</td><td class="py-1 uppercase" id="prev_kementerian">-</td></tr>
                         </table>
 
                         <div class="text-xs mb-2">Menyatakan dengan sesungguhnya bahwa[cite: 2] :</div>
@@ -351,55 +320,56 @@
         document.getElementById('prev_nip_ttd').innerText = getVal('in_nip') || '-';
     }
 
-function eksekusiDocxTemplater(arrayBufferContent, btnEl, originalBtnText) {
-    try {
-        const PizZipConstructor = window.PizZip || window.pizzip;
-        if (!PizZipConstructor) {
-            throw new Error("Library PizZip tidak terdeteksi di browser.");
+    function eksekusiDocxTemplater(arrayBufferContent, btnEl, originalBtnText) {
+        try {
+            const PizZipConstructor = window.PizZip || window.pizzip;
+            if (!PizZipConstructor) {
+                throw new Error("Library PizZip tidak terdeteksi di browser.");
+            }
+
+            const zip = new PizZipConstructor(arrayBufferContent);
+            const doc = new window.docxtemplater(zip, { 
+                paragraphLoop: true, linebreaks: true, nullGetter: function() { return ""; }
+            });
+            
+            const dataContext = {
+                nomor: getVal('in_nomor'),
+                nama_pejabat: getVal('in_nama_pejabat').toUpperCase(),
+                nama: getVal('in_nama_pejabat').toUpperCase(),
+                nip: getVal('in_nip'),
+                jabatan: getVal('in_jabatan'),
+                satuan_kerja: getVal('in_satuan_kerja').toUpperCase(),
+                unit_wilayah: getVal('in_unit_wilayah').toUpperCase(),
+                kementerian: getVal('in_kementerian').toUpperCase(),
+                kementerian_lembaga: getVal('in_kementerian').toUpperCase(),
+                uraian_sptjm: getVal('in_uraian_sptjm'),
+                lokasi: getVal('in_lokasi'),
+                tanggal_surat: formatTanggalIndo(getVal('in_tanggal_surat')),
+                pejabat_penandatangan_sptjm: getVal('in_jabatan')
+            };
+
+            doc.render(dataContext);
+
+            const blob = doc.getZip().generate({ 
+                type: "blob", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
+            });
+            
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; 
+            a.download = `SPTJM_${getVal('in_nomor').replace(/[^a-zA-Z0-9]/g, '_')}.docx`;
+            document.body.appendChild(a); a.click();
+            
+            setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
+
+        } catch (error) {
+            console.error("DocxTemplater Error:", error);
+            alert(`Gagal menyusun File Word!\n\nPesan Error: ${error.message}`);
+        } finally {
+            btnEl.innerHTML = originalBtnText; btnEl.disabled = false;
         }
-
-        const zip = new PizZipConstructor(arrayBufferContent);
-        const doc = new window.docxtemplater(zip, { 
-            paragraphLoop: true, linebreaks: true, nullGetter: function() { return ""; }
-        });
-        
-        const dataContext = {
-            nomor: getVal('in_nomor'),
-            nama_pejabat: getVal('in_nama_pejabat').toUpperCase(),
-            nama: getVal('in_nama_pejabat').toUpperCase(),
-            nip: getVal('in_nip'),
-            jabatan: getVal('in_jabatan'),
-            satuan_kerja: getVal('in_satuan_kerja').toUpperCase(),
-            unit_wilayah: getVal('in_unit_wilayah').toUpperCase(),
-            kementerian: getVal('in_kementerian').toUpperCase(),
-            kementerian_lembaga: getVal('in_kementerian').toUpperCase(),
-            uraian_sptjm: getVal('in_uraian_sptjm'),
-            lokasi: getVal('in_lokasi'),
-            tanggal_surat: formatTanggalIndo(getVal('in_tanggal_surat')),
-            pejabat_penandatangan_sptjm: getVal('in_jabatan')
-        };
-
-        doc.render(dataContext);
-
-        const blob = doc.getZip().generate({ 
-            type: "blob", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
-        });
-        
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; 
-        a.download = `SPTJM_${getVal('in_nomor').replace(/[^a-zA-Z0-9]/g, '_')}.docx`;
-        document.body.appendChild(a); a.click();
-        
-        setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100);
-
-    } catch (error) {
-        console.error("DocxTemplater Error:", error);
-        alert(`Gagal menyusun File Word!\n\nPesan Error: ${error.message}`);
-    } finally {
-        btnEl.innerHTML = originalBtnText; btnEl.disabled = false;
     }
-}
+
     async function downloadWord() {
         const btn = document.getElementById('btnDownload');
         const originalText = btn.innerHTML;
@@ -407,7 +377,6 @@ function eksekusiDocxTemplater(arrayBufferContent, btnEl, originalBtnText) {
         btn.disabled = true;
 
         try {
-            // Mengambil file template yang sudah Anda upload dengan nama template_konsep_sptjm.docx
             const response = await fetch("template_konsep_sptjm.docx");
             if (!response.ok) throw new Error("Template tidak ditemukan di repositori.");
             const arrayBuffer = await response.arrayBuffer();
